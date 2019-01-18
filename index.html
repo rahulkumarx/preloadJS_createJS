@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PreloadJS</title>
+	<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		canvas{
+				background-color:red;
+				box-shadow: 10px 10px 5px #aaaaaa;
+				margin-left:20px;
+				margin-top:20px;
+		}
+		button{
+			margin-top:20px;
+			
+			}
+	</style>
+</head>
+<body>
+<button onclick="myPro();" class="btn-primary btn-lg center-block">Load Image</button><br>
+	<script>
+		var queue =new createjs.LoadQueue();
+		var canvas;
+		function myPro()
+		{
+			alert("Please Use Mozilla Firefox...Thank You!!!!");
+			queue.on("progress", handleProgress);
+			queue.on("fileload", handleFileLoad);
+			queue.on("complete", handleComplete);
+			queue.loadManifest([
+			{id: "myImage1", src:"a.jpg"},
+			{id: "myImage2", src:"b.jpg"},
+			{id: "myImage3", src:"c.jpg"},
+			{id: "myImage4", src:"d.jpg"},
+			{id: "myImage5", src:"e.jpg"},
+			{id: "myImage6", src:"f.jpg"},
+			{id: "myImage7", src:"g.jpg"},
+			{id: "myImage8", src:"h.jpg"},
+			{id: "myImage9", src:"i.jpg"},
+			{id: "myImage10", src:"j.jpg"},
+			{id: "myImage11", src:"k.jpg"},
+			{id: "myImage12", src:"l.jpg"}
+			]);
+		}
+		function handleProgress(event)
+		{
+			console.log("Progress: "+queue.progress*100 + "%");
+		}
+		function handleFileLoad(event)
+		{
+			var image = queue.getResult(event.item.id);
+			canvas = document.createElement("canvas");
+			var ctx = canvas.getContext("2d");
+			ctx.drawImage(image,0,0,299,150);
+			var base64 = canvertToBase64(image);
+			canvas.append(base64);
+			document.body.appendChild(canvas);
+		}
+		function handleComplete(event)
+		{
+			console.log("Loading Complete");
+		}
+		function canvertToBase64(image){
+			var dataURL = canvas.toDataURL("image/png");
+			return dataURL;
+		}
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</body>
+</html>
